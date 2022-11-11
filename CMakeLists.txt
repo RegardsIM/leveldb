@@ -38,9 +38,17 @@ include(CheckIncludeFile)
 check_include_file("unistd.h" HAVE_UNISTD_H)
 
 include(CheckLibraryExists)
-check_library_exists(crc32c crc32c_value "" HAVE_CRC32C)
-check_library_exists(snappy snappy_compress "" HAVE_SNAPPY)
 check_library_exists(tcmalloc malloc "" HAVE_TCMALLOC)
+
+find_package(Crc32c)
+if (Crc32c_FOUND)
+  set(HAVE_CRC32C ON)
+endif (Crc32c_FOUND)
+
+find_package(Snappy)
+if (Snappy_FOUND)
+  set(HAVE_SNAPPY ON)
+endif (Snappy_FOUND)
 
 include(CheckCXXSymbolExists)
 # Using check_cxx_symbol_exists() instead of check_c_symbol_exists() because
